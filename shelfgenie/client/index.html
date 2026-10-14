@@ -84,8 +84,9 @@ ul.ticks li:before{content:"";position:absolute;left:2px;top:.62em;width:9px;hei
 ul.ticks.no li{color:var(--muted)}
 ul.ticks.no li:before{width:9px;height:0;border-left:0;border-bottom:1.5px solid var(--taupe);transform:none;top:.72em}
 .price{display:flex;justify-content:space-between;align-items:baseline;margin-top:20px;padding-top:16px;border-top:1px solid var(--greige)}
-.price .v{font:300 28px/1 var(--serif)}
-.price .v.ask{font:300 italic 20px/1 var(--serif);color:var(--muted)}
+.price .v{font:300 42px/1 var(--sans);letter-spacing:-.025em;font-variant-numeric:lining-nums tabular-nums;color:var(--charcoal)}
+.price .v.ask{font:300 italic 20px/1 var(--serif);letter-spacing:0;font-variant-numeric:normal;color:var(--muted)}
+.compare .pn{font:300 24px/1.1 var(--sans);letter-spacing:-.02em;font-variant-numeric:lining-nums tabular-nums}
 
 /* compare */
 section.block{padding:56px 0;border-top:1px solid var(--greige)}
@@ -161,7 +162,7 @@ footer{border-top:1px solid var(--greige);padding:28px 0 48px;color:var(--muted)
   .pp-grid b{font:400 20px/1 var(--serif)}
   .pp-grid .tg{display:flex;justify-content:space-between;font:500 9px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:5px 0 8px}
   .pp-grid ul.ticks li{font-size:10px}
-  .pp-grid .pv{margin-top:8px;padding-top:6px;border-top:1px solid var(--greige);font:400 15px/1 var(--serif)}
+  .pp-grid .pv{margin-top:8px;padding-top:6px;border-top:1px solid var(--greige);font:400 15px/1.2 var(--sans);font-variant-numeric:lining-nums tabular-nums}
   .pp-foot{margin-top:10px;font-size:9px;color:var(--muted);display:flex;justify-content:space-between}
   .opts{grid-template-columns:repeat(4,1fr);gap:14px 22px}
   .opts li{font-size:10px;padding:4px 0}
@@ -281,7 +282,7 @@ function render(){
   const rows = [['Construction','construction'],['Doors & drawers','doors'],['Details','details'],['Lighting','lighting']];
   let h = `<div class="rh ch"></div>` + D.levels.map((l,i)=>`<div class="ch ${i===S.level?'on':''}"><img src="${img(r.id,l.n,S.wash)}" alt="${esc(r.name)}, ${esc(l.name)}" data-i="${i}"><b>${esc(l.name)}</b><span class="tg"><span>${esc(l.tag)}</span>${key(l.key,3)}</span></div>`).join('');
   for (const [lab,f] of rows) h += `<div class="rh">${lab}</div>` + D.levels.map((l,i)=>`<div class="${i===S.level?'on':''}">${esc(r.compare && r.compare[f] ? r.compare[f][i] : l[f])}</div>`).join('');
-  h += `<div class="rh">Starting at</div>` + D.levels.map((l,i)=>`<div class="${i===S.level?'on':''}">${esc(priceHTML(r.startingAt[i]))}</div>`).join('');
+  h += `<div class="rh">Starting at</div>` + D.levels.map((l,i)=>`<div class="${i===S.level?'on':''}${r.startingAt[i]==null?'':' pn'}">${esc(priceHTML(r.startingAt[i]))}</div>`).join('');
   $('#compare').innerHTML = h;
   const real = IMG['real_'+r.id];
   $('#realBlock').style.display = real ? '' : 'none';
